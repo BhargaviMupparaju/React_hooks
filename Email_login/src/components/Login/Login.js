@@ -1,8 +1,9 @@
-import React, { useState, useReducer, useEffect } from "react";
+import React, { useState, useReducer, useEffect, useContext } from "react";
 
 import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
+import AuthContext from "../store/auth-context";
 
 const emailReducer = (state, action) => {
 	if (action.type === "USER_INPUT") {
@@ -61,6 +62,7 @@ const Login = (props) => {
 	// The above destructuring is used for useEffect. Here we can useEffect again to avoid the below scenario
 	// Here the password validation is checking after adding more than 6 characters which is unnecessary. to avoid that validation we can use useEffect
 
+	const authctx = useContext(AuthContext);
 	useEffect(() => {
 		const identifier = setTimeout(() => {
 			console.log("checking form validity");
@@ -95,7 +97,7 @@ const Login = (props) => {
 
 	const submitHandler = (event) => {
 		event.preventDefault();
-		props.onLogin(emailState.value, passwordState.value);
+		authctx.onLogin(emailState.value, passwordState.value);
 	};
 
 	return (
